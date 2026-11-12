@@ -87,15 +87,152 @@
 //   console.log("Доступ дозволено");
 // }
 
-type Product = {
-  id: number;
-  title: string;
-  isavailable: boolean;
-  isNew?: boolean;
-};
+// type Product = {
+//   id: number;
+//   title: string;
+//   isavailable: boolean;
+//   isNew?: boolean;
+// };
 
-const Iphone: Product = {
-  id: 11,
-  title: "iPhone 25 pro",
-  isavailable: true,
-};
+// const Iphone: Product = {
+//   id: 11,
+//   title: "iPhone 25 pro",
+//   isavailable: true,
+// };
+
+
+
+class Character {
+  public name: string;
+  private _health: number;
+  protected level: number;
+  experience: number;
+
+  constructor(name: string, health: number, level: number, experience: number) {
+    this.name = name;
+    this._health = health;
+    this.level = level;
+    this.experience = experience;
+  }
+
+  get health(): number {
+    return this._health;
+  }
+
+  set health(value: number) {
+    if (value < 0) {
+      this._health = 0;
+    } else if (value > 100) {
+      this._health = 100;
+    } else {
+      this._health = value;
+    }
+  }
+
+  attack(): void {
+    console.log(`${this.name} атакує`);
+  }
+
+  takeDamage(damage: number): void {
+    this._health = Math.max(0, this._health - damage);
+
+    console.log(`${this.name} отримав ${damage} шкоди`);
+  }
+
+  showStats(): void {
+    console.log(`Ім'я: ${this.name}`);
+    console.log(`Здоров'я: ${this.health}`);
+    console.log(`Рівень: ${this.level}`);
+    console.log(`Досвід: ${this.experience}`);
+  }
+}
+
+const c1 = new Character("Pavlo", 100, 1, 0);
+
+c1.attack();
+c1.takeDamage(20);
+c1.showStats();
+
+
+class BankAccount {
+  public owner: string;
+  private balance: number;
+
+  constructor(owner: string, balance: number) {
+    this.owner = owner;
+    this.balance = balance;
+  }
+
+  get getBalance(): number {
+    return this.balance;
+  }
+
+  deposit(amount: number): void {
+    if (amount <= 0) {
+      console.log("Сума поповнення має бути більшою за 0");
+      return;
+    }
+
+    this.balance += amount;
+  }
+
+  withdraw(amount: number): void {
+    if (amount <= 0) {
+      console.log("Сума зняття має бути більшою за 0");
+      return;
+    }
+
+    if (amount > this.balance) {
+      console.log("Недостатньо коштів на рахунку");
+      return;
+    }
+
+    this.balance -= amount;
+  }
+}
+
+const account = new BankAccount("Mariya", 1000);
+
+account.deposit(500);
+account.withdraw(200);
+
+console.log(account.getBalance);
+
+
+class Warrior extends Character {
+  useSword() {
+    console.log("Ми використали меч");
+  }
+}
+
+
+class Wizard extends Character {
+  constructor(name: string, health: number, level: number, experience: number) {
+    super(name, health, level, experience);
+  }
+
+  tellSpell() {
+    console.log("Ми промовили закляття");
+  }
+}
+
+
+class Archaeologist extends Character {
+  constructor(name: string, health: number, level: number, experience: number) {
+    super(name, health, level, experience);
+  }
+
+  attack(): void {
+    console.log(`${this.name} атакує лопатою`);
+  }
+
+  dig(): void {
+    console.log(`${this.name} проводить розкопки`);
+  }
+}
+
+const a1 = new Archaeologist("Mariya", 100, 1, 0);
+
+a1.attack();
+a1.dig();
+a1.showStats();
